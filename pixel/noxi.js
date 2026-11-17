@@ -1,5 +1,5 @@
 // Backend API URL: automatically points to localhost during dev or to deployed cloud URL in production
-const PIXEL_API_URL = window.PIXEL_API_URL || "http://127.0.0.1:5000";
+const PIXEL_API_URL = window.PIXEL_API_URL || (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost" ? "http://127.0.0.1:5000" : "https://noxbuddy.onrender.com");
 
 let busy = false;
 let chats = JSON.parse(localStorage.getItem("pixelChats")) || [];
