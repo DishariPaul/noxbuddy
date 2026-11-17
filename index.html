@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="pwa-install.css">
   <!-- PWA & Mobile Meta -->
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#F5F1E8">
@@ -29,6 +30,10 @@
         <a href="#journey" class="nav-link">How it works</a>
         <a href="#preview" class="nav-link">The space</a>
         <a href="./auth.html" class="nav-link signin-link">Sign in</a>
+        <button id="navInstallBtn" class="btn btn-secondary btn-sm pwa-install-btn" title="Install NoxBuddy App">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Install App</span>
+        </button>
         <a href="./auth.html" class="btn btn-primary btn-sm">Start your study space &rarr;</a>
       </div>
       <button class="landing-menu-btn" id="landingMenuBtn" aria-label="Toggle navigation menu" aria-expanded="false">
@@ -39,6 +44,10 @@
       <a href="#journey" class="mobile-drawer-link">How it works</a>
       <a href="#preview" class="mobile-drawer-link">The space</a>
       <a href="./auth.html" class="mobile-drawer-link">Sign in</a>
+      <button id="drawerInstallBtn" class="btn btn-secondary btn-sm mobile-cta pwa-install-btn" style="width: 100%; justify-content: center;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Install App on Phone</span>
+      </button>
       <a href="./auth.html" class="btn btn-primary btn-sm mobile-cta">Start your study space &rarr;</a>
     </div>
   </header>
@@ -54,6 +63,10 @@
         </p>
         <div class="hero-actions">
           <a href="./auth.html" class="btn btn-primary">Start your study space &rarr;</a>
+          <button id="heroInstallBtn" class="btn btn-secondary pwa-install-btn" title="Download & Install NoxBuddy on your device">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Install App</span>
+          </button>
           <a href="#journey" class="btn btn-secondary">See how it works</a>
         </div>
       </div>
@@ -315,8 +328,12 @@
         <p class="closing-text">
           Plan something. Focus for a while. Write something down. Start again tomorrow.
         </p>
-        <div class="closing-action">
+        <div class="closing-action" style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
           <a href="./auth.html" class="btn btn-primary">Get started &rarr;</a>
+          <button id="closingInstallBtn" class="btn btn-secondary pwa-install-btn" title="Download & Install NoxBuddy on your device">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Install App</span>
+          </button>
         </div>
       </div>
     </section>
@@ -359,5 +376,7 @@
       });
     }
   </script>
+  <!-- PWA Install Prompt & Modal Controller -->
+  <script src="./pwa-install.js"></script>
 </body>
 </html>

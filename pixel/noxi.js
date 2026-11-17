@@ -33,6 +33,26 @@ function handleKey(e) {
 }
 
 /* ── Helpers ── */
+function updateAppHeight() {
+    const height = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    document.documentElement.style.setProperty('--app-height', `${height}px`);
+    const app = document.getElementById('app');
+    if (app) {
+        app.style.height = `${height}px`;
+    }
+}
+
+window.addEventListener('resize', updateAppHeight);
+window.addEventListener('orientationchange', () => setTimeout(updateAppHeight, 150));
+
+if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', () => {
+        updateAppHeight();
+        const wrap = document.getElementById('messages');
+        if (wrap) wrap.scrollTop = wrap.scrollHeight;
+    });
+}
+
 function getTime() {
     return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
@@ -53,7 +73,9 @@ function appendMsg(role, text) {
         <div class="msg-label">${getTime()}</div>
     `;
     wrap.appendChild(div);
-    wrap.scrollTop = wrap.scrollHeight;
+    requestAnimationFrame(() => {
+        wrap.scrollTop = wrap.scrollHeight;
+    });
     return div;
 }
 
@@ -71,7 +93,9 @@ function showTyping() {
         </div>
     `;
     wrap.appendChild(div);
-    wrap.scrollTop = wrap.scrollHeight;
+    requestAnimationFrame(() => {
+        wrap.scrollTop = wrap.scrollHeight;
+    });
 }
 
 function removeTyping() {
@@ -268,12 +292,21 @@ function showEmptyState() {
 
 /* Boot on page load */
 window.addEventListener("DOMContentLoaded", () => {
+    updateAppHeight();
+
     const savedTheme = localStorage.getItem('theme') || '';
     setTheme(savedTheme);
 
     const input = document.getElementById('userInput');
     if (input) {
         input.addEventListener('input', () => autoResize(input));
+        input.addEventListener('focus', () => {
+            setTimeout(() => {
+                updateAppHeight();
+                const wrap = document.getElementById('messages');
+                if (wrap) wrap.scrollTop = wrap.scrollHeight;
+            }, 300);
+        });
     }
 
     if (chats.length === 0) {

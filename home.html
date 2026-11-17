@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./home.css">
+  <link rel="stylesheet" href="./pwa-install.css">
   <!-- PWA & Mobile Meta -->
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#F5F1E8">
@@ -36,6 +37,10 @@
       </div>
 
       <div class="nav-right">
+        <button id="deskInstallBtn" class="btn btn-secondary btn-sm pwa-install-btn" title="Install NoxBuddy App" style="padding: 6px 12px; font-size: 0.8125rem;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Install App</span>
+        </button>
         <div class="user-pill" title="Signed in">
           <span class="user-avatar" id="avatar">D</span>
           <span class="user-name" id="userName">Disha</span>
@@ -53,6 +58,10 @@
       <a href="./pawmo/timer.html" class="mobile-nav-item">Pawmo (Focus)</a>
       <a href="./pebble/journal.html" class="mobile-nav-item">Pebble (Journal)</a>
       <a href="./pixel/noxi.html" class="mobile-nav-item">Pixel (Chatbot)</a>
+      <button id="mobileDeskInstallBtn" class="mobile-nav-item pwa-install-btn" style="width: 100%; text-align: left; background: none; border: none; font-size: 0.9375rem; font-family: inherit; color: var(--text-primary); cursor: pointer; padding: 12px 16px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 8px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Install NoxBuddy on Phone</span>
+      </button>
     </nav>
   </header>
 
@@ -219,5 +228,7 @@
       });
     }
   </script>
+  <!-- PWA Install Prompt & Modal Controller -->
+  <script src="./pwa-install.js"></script>
 </body>
 </html>
