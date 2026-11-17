@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pebble Journal</title>
+    <link rel="stylesheet" href="./journal.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=Nunito:wght@300;400;600;700&family=Syne:wght@400;700&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <!-- PWA & Mobile Meta -->
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#F5F1E8">
+  <link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="NoxBuddy">
+</head>
+<body class="mood-happy">
+
+    <div class="mood-bar"></div>
+    <!-- SAD: Rain -->
+    <div class="rain-container" id="rainContainer"></div>
+    <!-- HAPPY: Sun + pollen -->
+    <div class="happy-container" id="happyContainer">
+        <div class="sun-orb"></div>
+    </div>
+    <!-- FOCUSED: Grid + sparks -->
+    <div class="focused-container" id="focusedContainer">
+        <div class="grid-lines"></div>
+        <div class="scan-line"></div>
+    </div>
+    <!-- TIRED: Aurora + fireflies -->
+    <div class="tired-container" id="tiredContainer">
+        <div class="aurora aurora-1"></div>
+        <div class="aurora aurora-2"></div>
+    </div>
+
+    <!-- Mobile Drawer Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="../home.html" title="home"><h1>Pebble.</h1></a>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close entries">✕</button>
+            </div>
+            <button class="new-entry" id="newEntryBtn">+ New Entry</button>
+            <div class="journal-list" id="journalList"></div>
+        </aside>
+
+        <main class="journal-area">
+            <div class="mobile-nav-bar">
+                <button class="mobile-menu-btn" id="sidebarToggleBtn" aria-label="Open entries list">
+                    <span>☰</span> Entries
+                </button>
+                <a href="../home.html" class="mobile-home-link">← Home</a>
+            </div>
+
+            <div class="top-bar">
+                <input type="text" placeholder="Journal Title..." class="title-input">
+                <select id="moodSelect" aria-label="Select mood">
+                    <option value="happy">☀️ Happy</option>
+                    <option value="sad">🌧️ Melancholy</option>
+                    <option value="focused">⚡ Focused</option>
+                    <option value="tired">🌙 Tired</option>
+                </select>
+            </div>
+            
+            <textarea placeholder="Write your thoughts here... 
+(Start writing by first clicking '+ New Entry' or selecting an entry from the list)" class="journal-content"></textarea>
+            
+            <div class="upload-section">
+                <label class="upload-btn">📷 Upload Images
+                    <input type="file" multiple accept="image/*" id="imageUpload">
+                </label>
+            </div>
+
+            <div class="image-gallery" id="gallery"></div>
+
+            <div class="action-bar">
+                <button id="exportBtn" type="button" class="export-btn" title="Customize and export as clean document PDF">📄 Export PDF</button>
+                <button id="saveBtn">Save</button>
+                <button id="deleteBtn">Delete</button>
+            </div>
+
+        </main>
+    </div>
+
+    
+    <!-- Export Customization Modal (Clean Word Document without website UI) -->
+    <div id="exportModal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Export Journal as PDF">
+        <div class="export-modal-box">
+            <div class="export-modal-header">
+                <div class="modal-header-info">
+                    <h2>📄 Customize &amp; Export Document</h2>
+                    <p class="modal-subtitle">Format your entry as a clean Word-style document without website UI</p>
+                </div>
+                <button class="modal-close-btn" id="closeExportModal" aria-label="Close modal">✕</button>
+            </div>
+
+            <div class="export-modal-body">
+                <!-- Customization Controls Panel -->
+                <div class="export-controls-panel">
+                    <h3 class="panel-section-title">Document Settings</h3>
+
+                    <!-- a. Background Color -->
+                    <div class="control-group">
+                        <label class="control-label">A. Background Color</label>
+                        <div class="color-options" id="docBgOptions">
+                            <button type="button" class="color-pill active" data-color="#FFFFFF" title="Crisp White" style="background: #FFFFFF;"></button>
+                            <button type="button" class="color-pill" data-color="#FAF6EE" title="Warm Stationery Paper" style="background: #FAF6EE;"></button>
+                            <button type="button" class="color-pill" data-color="#F2F5F3" title="Soft Sage" style="background: #F2F5F3;"></button>
+                            <button type="button" class="color-pill" data-color="#F3EFF8" title="Muted Lavender" style="background: #F3EFF8;"></button>
+                            <button type="button" class="color-pill" data-color="#FFFDF7" title="Ivory Cream" style="background: #FFFDF7;"></button>
+                            <div class="custom-color-wrap">
+                                <input type="color" id="docCustomBg" value="#FFFFFF" title="Pick custom background color">
+                                <span>Custom</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- b. Font Style -->
+                    <div class="control-group">
+                        <label for="docFontStyle" class="control-label">B. Font Style</label>
+                        <select id="docFontStyle" class="doc-select-input">
+                            <option value="'Playfair Display', Georgia, serif">Editorial Serif (Playfair / Georgia)</option>
+                            <option value="'Nunito', 'DM Sans', sans-serif">Clean Sans-Serif (Nunito / DM Sans)</option>
+                            <option value="'Space Mono', 'Courier New', monospace">Typewriter / Monospace (Space Mono)</option>
+                            <option value="'Lato', Arial, sans-serif">Modern Minimalist (Lato / Arial)</option>
+                        </select>
+                    </div>
+
+                    <!-- c. Font Color -->
+                    <div class="control-group">
+                        <label class="control-label">C. Font Color</label>
+                        <div class="color-options" id="docFontColorOptions">
+                            <button type="button" class="color-pill active" data-color="#222222" title="Charcoal Noir" style="background: #222222;"></button>
+                            <button type="button" class="color-pill" data-color="#1A2436" title="Deep Navy" style="background: #1A2436;"></button>
+                            <button type="button" class="color-pill" data-color="#3D2D1D" title="Warm Sepia" style="background: #3D2D1D;"></button>
+                            <button type="button" class="color-pill" data-color="#555555" title="Muted Graphite" style="background: #555555;"></button>
+                            <div class="custom-color-wrap">
+                                <input type="color" id="docCustomColor" value="#222222" title="Pick custom font color">
+                                <span>Custom</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- d. Font Size -->
+                    <div class="control-group">
+                        <label class="control-label">D. Font Size</label>
+                        <div class="size-pill-group" id="docFontSizeGroup">
+                            <button type="button" class="size-pill" data-size="14px">Small (14px)</button>
+                            <button type="button" class="size-pill active" data-size="16px">Standard (16px)</button>
+                            <button type="button" class="size-pill" data-size="18px">Large (18px)</button>
+                            <button type="button" class="size-pill" data-size="20px">XL (20px)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Document Sheet Preview Column -->
+                <div class="export-preview-column">
+                    <div class="preview-header-bar">
+                        <span class="preview-tag">📄 Live Document Sheet (No UI)</span>
+                    </div>
+                    <div class="export-sheet-wrapper">
+                        <div class="export-doc-sheet" id="exportDocSheet">
+                            <div class="doc-sheet-header">
+                                <h1 class="doc-sheet-title" id="docPreviewTitle">Untitled Journal</h1>
+                                <div class="doc-sheet-meta">
+                                    <span class="doc-meta-date" id="docPreviewDate">Date</span>
+                                    <span class="doc-meta-sep">•</span>
+                                    <span class="doc-meta-mood" id="docPreviewMood">Mood: Happy</span>
+                                </div>
+                                <hr class="doc-sheet-hr">
+                            </div>
+                            <div class="doc-sheet-body" id="docPreviewContent">
+                                Write something down...
+                            </div>
+                            <div class="doc-sheet-gallery" id="docPreviewGallery"></div>
+                            <div class="doc-sheet-footer">
+                                <span>NoxBuddy Study Journal • Personal Study Space</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="export-modal-footer">
+                <button type="button" id="cancelExportBtn" class="btn-doc-cancel">Cancel</button>
+                <button type="button" id="directDownloadPdfBtn" class="btn-doc-download">⬇️ Download PDF</button>
+                <button type="button" id="printPdfBtn" class="btn-doc-print">🖨️ Print / Save as PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Client-Side PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="./journal.js"></script>
+
+  <!-- Register PWA Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('../sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

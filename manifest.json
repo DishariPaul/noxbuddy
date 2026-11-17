@@ -1,0 +1,60 @@
+{
+  "name": "NoxBuddy — Quiet Digital Study Space",
+  "short_name": "NoxBuddy",
+  "description": "A quiet, warm digital study space with planning, focus timer, mood journal, and AI companion.",
+  "start_url": "./home.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F5F1E8",
+  "theme_color": "#F5F1E8",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Focus Timer (Pawmo)",
+      "short_name": "Pawmo",
+      "description": "Start a focus timer session",
+      "url": "./pawmo/timer.html",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Study Planner (Planr)",
+      "short_name": "Planr",
+      "description": "Open your study to-do notebook",
+      "url": "./planr/planner.html",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Mood Journal (Pebble)",
+      "short_name": "Pebble",
+      "description": "Write a journal entry",
+      "url": "./pebble/journal.html",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Pixel AI Assistant",
+      "short_name": "Pixel",
+      "description": "Ask Pixel study questions",
+      "url": "./pixel/noxi.html",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+# Environment variables & secrets
+.env
+*/.env
+extra.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archived legacy code
+archive/
+
+# OS Files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./planner.css">
+    <title>Planr</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- PWA & Mobile Meta -->
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#F5F1E8">
+  <link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="NoxBuddy">
+</head>
+<body>
+    <button id="themeToggle" aria-pressed="false" title="theme mode">🌙</button>
+    <a href="../home.html"><button id="back-link">🏠</button></a>
+    <div id="logo"><a href="#" title="Planr Home-Page">Planr</a></div>
+    <div class="container">
+        <div class="note-record">
+            <h2>My Planner ✨</h2>
+            <div id="info"></div> <!--for the date and time information on the right hand side of the page-->
+            <div id="taskCounter" class="task-counter">0 / 0 completed</div>
+            <div class="todo-input">
+                <input type="text" id="taskInput" placeholder="Add a task..." />
+                <button id="addBtn" title="add task">+</button>
+            </div>
+            <ul id="taskList"></ul>
+        </div>
+    </div>
+    <script src="./planner.js" defer></script>
+  <!-- Register PWA Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('../sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

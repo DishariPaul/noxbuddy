@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./noxi.css">
+    <title>Pixel — Study Companion</title>
+  <!-- PWA & Mobile Meta -->
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#F5F1E8">
+  <link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="NoxBuddy">
+</head>
+<body>
+ 
+    <div class="app" id="app">
+        <!-- Backdrop for mobile off-canvas drawer -->
+        <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span>pixel</span>
+                    <span class="logo-dot"></span>
+                </div>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close sidebar">✕</button>
+            </div>
+            <button class="new-chat-btn" onclick="createNewChat()"> + New Chat</button>
+        
+            <div class="section-label">Recent</div>
+            <div class="recent-wrap">
+                <div id="recentChats"></div>
+            </div>
+            <div class="theme-picker">
+                <div class="theme-label">Vibe Check</div>
+                <div class="themes">
+                    <div class="theme-dot t-coral selected" title="Coral" onclick="setTheme('')" id="td-coral"></div>
+                    <div class="theme-dot t-pastel" title="Pastel" onclick="setTheme('theme-pastel')" id="td-pastel"></div>
+                    <div class="theme-dot t-mint" title="Mint" onclick="setTheme('theme-mint')" id="td-mint"></div>
+                    <div class="theme-dot t-sky"  title="Sky"  onclick="setTheme('theme-sky')"  id="td-sky"></div>
+                    <div class="theme-dot t-sun"  title="Sun"  onclick="setTheme('theme-sun')"  id="td-sun"></div>
+                    <div class="theme-dot t-night"  title="Night"  onclick="setTheme('theme-night')"  id="td-night"></div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Chat Area -->
+        <main class="main">
+            <header class="topbar">
+                <button class="menu-toggle-btn" id="menuToggleBtn" aria-label="Open chats menu">☰</button>
+                <span class="topbar-name">chatting with pixel ✨</span>
+                <div class="topbar-actions">
+                    <a href="../home.html"><button class="topbar-btn">🌐 home</button></a>
+                </div>
+            </header>
+        
+            <section class="messages" id="messages">
+                <div class="empty" id="emptyState">
+                    <div class="empty-emoji">👋</div>
+                    <h2>hey there!</h2>
+                    <p>i'm pixel, your friendly AI pal. what's on your mind today?</p>
+                    <div class="chips">
+                        <button class="chip" onclick="sendChip(this)">✨ explain something</button>
+                        <button class="chip" onclick="sendChip(this)">💡 help me brainstorm</button>
+                        <button class="chip" onclick="sendChip(this)">📝 write something</button>
+                        <button class="chip" onclick="sendChip(this)">😂 tell me a joke</button>
+                    </div>
+                </div>
+            </section>
+        
+            <footer class="input-area">
+                <div class="input-wrap">
+                    <textarea
+                        id="userInput"
+                        rows="1"
+                        placeholder="say anything..."
+                        onkeydown="handleKey(event)"
+                        oninput="autoResize(this)"
+                    ></textarea>
+                </div>
+                <button class="send-btn" id="sendBtn" onclick="sendMessage()" disabled title="Send">➤</button>
+            </footer>
+        </main>
+    
+    </div>
+ 
+    <script src="./noxi.js"></script>
+
+  <!-- Register PWA Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('../sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

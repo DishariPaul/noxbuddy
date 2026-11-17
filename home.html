@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoxBuddy — Your Study Desk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./home.css">
+  <!-- PWA & Mobile Meta -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#F5F1E8">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="NoxBuddy">
+</head>
+<body>
+
+  <!-- Top Navigation (replaces the old sidebar) -->
+  <header class="top-nav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="./home.html" class="brand">
+          <span class="brand-dot"></span>
+          <span class="brand-name">NoxBuddy</span>
+        </a>
+        <nav class="nav-menu">
+          <a href="./home.html" class="nav-item active">Home</a>
+          <a href="./planr/planner.html" class="nav-item">Planr</a>
+          <a href="./pawmo/timer.html" class="nav-item">Pawmo</a>
+          <a href="./pebble/journal.html" class="nav-item">Pebble</a>
+          <a href="./pixel/noxi.html" class="nav-item">Pixel</a>
+        </nav>
+      </div>
+
+      <div class="nav-right">
+        <div class="user-pill" title="Signed in">
+          <span class="user-avatar" id="avatar">D</span>
+          <span class="user-name" id="userName">Disha</span>
+        </div>
+        <button id="logoutBtn" class="logout-btn" title="Sign out">Sign out</button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile dropdown drawer -->
+    <nav class="mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile navigation">
+      <a href="./home.html" class="mobile-nav-item active">Home</a>
+      <a href="./planr/planner.html" class="mobile-nav-item">Planr (Notebook)</a>
+      <a href="./pawmo/timer.html" class="mobile-nav-item">Pawmo (Focus)</a>
+      <a href="./pebble/journal.html" class="mobile-nav-item">Pebble (Journal)</a>
+      <a href="./pixel/noxi.html" class="mobile-nav-item">Pixel (Chatbot)</a>
+    </nav>
+  </header>
+
+  <!-- Main Study Desk Container -->
+  <main class="desk-container">
+
+    <!-- Calm Human Greeting Header -->
+    <header class="desk-greeting">
+      <h1 class="greeting-title" id="greetingTitle">Good afternoon.</h1>
+      <p class="greeting-subtitle">
+        Ready for a little progress? <span class="context-note" id="taskContextLine">Checking your task list...</span>
+      </p>
+    </header>
+
+    <!-- Asymmetric Desk Layout -->
+    <div class="desk-grid">
+
+      <!-- PRIMARY: Pawmo Focus Area (Top Left) -->
+      <section class="desk-card card-pawmo" aria-label="Pawmo focus area">
+        <div class="card-tag tag-pawmo">
+          <span>Pawmo</span>
+          <span class="streak-pill" id="deskStreakPill">&#x1F525; 0 day streak</span>
+        </div>
+
+        <div class="pawmo-focus-stage">
+          <div class="pet-presence">
+            <span class="pet-avatar" id="deskPetFace" title="Pawmo">&#x1F431;</span>
+            <span class="pet-status-msg" id="deskPetMsg">Let's study together!</span>
+          </div>
+
+          <div class="timer-unit">
+            <div class="timer-dial-simple">
+              <svg class="timer-ring-svg" viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+                <circle class="ring-progress" id="deskRingProgress" cx="60" cy="60" r="52"></circle>
+              </svg>
+              <div class="timer-readout">
+                <span class="timer-time" id="deskTimerTime">25:00</span>
+                <span class="timer-hint" id="deskTimerHint">Ready to focus</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timer-controls">
+            <button class="btn btn-primary btn-focus" id="deskStartTimerBtn">Start Focus &rarr;</button>
+            <button class="btn btn-secondary btn-icon" id="deskResetTimerBtn" title="Reset timer">&#x21BA;</button>
+            <a href="./pawmo/timer.html" class="desk-link subtle-link">Open full Pawmo &rarr;</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECONDARY: Planr Real Task Sheet (Top Right) -->
+      <section class="desk-card card-planr" aria-label="Planr notebook sheet">
+        <div class="card-tag tag-planr">
+          <span>Planr</span>
+          <span class="sheet-date" id="deskTodayDate">September 30</span>
+        </div>
+
+        <div class="sheet-body">
+          <h2 class="sheet-heading">Today's Notebook</h2>
+
+          <!-- Functional Quick-Add Input -->
+          <form class="desk-task-input-row" id="deskTaskForm" onsubmit="handleDeskAddTask(event)">
+            <input type="text" id="deskTaskInput" class="desk-input" placeholder="Write down a task..." />
+            <button type="submit" class="btn btn-secondary btn-sm" title="Add task">+</button>
+          </form>
+
+          <!-- Real Task List -->
+          <ul class="desk-task-list" id="deskTaskList">
+            <!-- Dynamically populated from Planr localStorage -->
+          </ul>
+
+          <div class="sheet-footer">
+            <span class="task-tally" id="deskTaskTally">0 tasks remaining</span>
+            <a href="./planr/planner.html" class="desk-link">View Planr &rarr;</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- MIDDLE: Honest Daily Progress Strip -->
+      <div class="desk-strip-span">
+        <div class="progress-strip">
+          <span class="strip-label">TODAY</span>
+          <div class="strip-metrics">
+            <span class="metric-item"><strong id="metricStreak">0</strong> day streak</span>
+            <span class="metric-sep">&middot;</span>
+            <span class="metric-item"><strong id="metricTime">0</strong> min focused</span>
+            <span class="metric-sep">&middot;</span>
+            <span class="metric-item"><strong id="metricTasks">0/0</strong> tasks</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOWER ASYMMETRIC AREA: Pebble (Medium) & Pixel (Small) -->
+      
+      <!-- Pebble: Mood & Journal -->
+      <section class="desk-card card-pebble" id="deskPebbleCard" aria-label="Pebble journal check-in">
+        <div class="card-tag tag-pebble">
+          <span>Pebble</span>
+          <span class="mood-feedback" id="deskMoodLabel">How are you feeling today?</span>
+        </div>
+
+        <div class="pebble-content">
+          <!-- Mood Selection Buttons -->
+          <div class="mood-selector" role="radiogroup" aria-label="Select today's mood">
+            <button type="button" class="mood-btn" data-mood="calm" title="Calm" onclick="selectDeskMood('calm')">&#x1F60A;</button>
+            <button type="button" class="mood-btn active" data-mood="happy" title="Happy" onclick="selectDeskMood('happy')">&#x2600;&#xFE0F;</button>
+            <button type="button" class="mood-btn" data-mood="focused" title="Focused" onclick="selectDeskMood('focused')">&#x26A1;</button>
+            <button type="button" class="mood-btn" data-mood="sad" title="Melancholy" onclick="selectDeskMood('sad')">&#x1F327;&#xFE0F;</button>
+            <button type="button" class="mood-btn" data-mood="tired" title="Tired" onclick="selectDeskMood('tired')">&#x1F319;</button>
+          </div>
+
+          <!-- Journal Preview -->
+          <div class="journal-preview-box">
+            <p class="journal-preview-quote" id="deskJournalPreview">
+              &ldquo;Take a quiet moment to reflect on your day.&rdquo;
+            </p>
+            <span class="journal-preview-meta" id="deskJournalDate">No entries yet today</span>
+          </div>
+
+          <div class="card-footer-action">
+            <a href="./pebble/journal.html" class="desk-link">Continue writing &rarr;</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pixel: Quiet Study Companion -->
+      <section class="desk-card card-pixel" aria-label="Pixel companion">
+        <div class="card-tag tag-pixel">
+          <span>&#x2726; Pixel</span>
+        </div>
+
+        <div class="pixel-content">
+          <h3 class="pixel-heading">Need a hand?</h3>
+          <p class="pixel-desc">
+            Ask me something, talk through a problem, or learn something new.
+          </p>
+          <div class="pixel-action">
+            <a href="./pixel/noxi.html" class="btn btn-secondary btn-sm">Chat with Pixel &rarr;</a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Floating Pixel Quick Launcher (Subtle, non-intrusive) -->
+  <a href="./pixel/noxi.html" class="floating-pixel-btn" title="Open Pixel Chat">
+    <span class="float-icon">&#x2726;</span>
+    <span class="float-text">Pixel</span>
+  </a>
+
+  <!-- Firebase Compat (Unified with auth.html to eliminate version mismatch) -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+  <script src="./home.js"></script>
+
+  <!-- Register PWA Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./auth.css">
+    <title>NB - Login | Sign-up</title>
+  <!-- PWA & Mobile Meta -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#F5F1E8">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="NoxBuddy">
+</head>
+<body>
+    <div class="bg-orbs">
+        <div class="orb orb-a"></div>
+        <div class="orb orb-b"></div>
+        <div class="orb orb-c"></div>
+    </div>
+
+
+    <div class="auth-wrapper">
+        <!-- Brand -->
+        <div class="brand">
+            <span class="brand-pet">🦉</span>
+            <h1 class="brand-name">NoxBuddy</h1>
+            <p class="brand-tagline">Stay focused. Stay consistent.</p>
+        </div>
+        <!-- Card -->
+        <div class="auth-card">
+
+            <!-- Mode toggle: Login / Sign Up -->
+            <div class="mode-toggle">
+                <button class="mode-btn active" id="loginModeBtn" onclick="switchMode('login')">Login</button>
+                <button class="mode-btn" id="signupModeBtn" onclick="switchMode('signup')">Sign Up</button>
+                <div class="mode-slider" id="modeSlider"></div>
+            </div>
+
+            <!-- Method toggle: Email / Phone -->
+            <div class="method-toggle">
+                <button class="method-btn active" id="emailMethodBtn" onclick="switchMethod('email')">
+                    <span>✉</span> Email
+                </button>
+                <button class="method-btn" id="phoneMethodBtn" onclick="switchMethod('phone')">
+                    <span>📱</span> Phone
+                </button>
+            </div>
+
+
+
+            <!-- ─── EMAIL FORM ─── -->
+            <form id="emailForm" class="auth-form" onsubmit="handleEmailSubmit(event)">
+                
+                <!-- Sign Up extras -->
+                <div class="signup-only field-group" id="nameField">
+                    <label>Your name</label>
+                    <input type="text" id="nameInput" placeholder="e.g. Disha" autocomplete="name"/>
+                    <span class="field-error" id="nameError"></span>
+                </div>
+                <div class="field-group">
+                    <label>Email address</label>
+                    <input type="email" id="emailInput" placeholder="you@example.com" autocomplete="email" required/>
+                    <span class="field-error" id="emailError"></span>
+                </div>
+                <div class="field-group">
+                    <label>Password</label>
+                    <div class="input-eye-wrap">
+                        <input type="password" id="passwordInput" placeholder="Min. 6 characters" autocomplete="current-password" required/>
+                        <button type="button" class="eye-btn" onclick="togglePassword('passwordInput', this)">👁️</button>
+                    </div>
+                    <span class="field-error" id="passwordError"></span>
+                </div>
+
+                <!-- Sign Up: confirm password -->
+                <div class="signup-only field-group" id="confirmField">
+                    <label>Confirm password</label>
+                    <div class="input-eye-wrap">
+                        <input type="password" id="confirmInput" placeholder="Repeat password"/>
+                        <button type="button" class="eye-btn" onclick="togglePassword('confirmInput', this)">👁️</button>
+                    </div>
+                    <span class="field-error" id="confirmError"></span>
+                </div>
+                
+                <!-- Forgot password (login only) -->
+                <div class="login-only forgot-row">
+                    <a href="#" id="forgotPasswordLink" class="forgot-link">Forgot password?</a>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="submit-btn" id="emailSubmitBtn">
+                    <span class="btn-text">Continue</span>
+                    <span class="btn-loader hidden" id="emailLoader">⟳</span>
+                </button>
+
+                <!-- Server message -->
+                <div class="server-msg hidden" id="emailMsg"></div>
+            </form>
+
+
+            <!-- ─── PHONE FORM ─── -->
+            <form id="phoneForm" class="auth-form hidden" onsubmit="handlePhoneSubmit(event)">
+                <!-- Sign Up extras -->
+                <div class="signup-only field-group" id="phoneNameField">
+                    <label>Your name</label>
+                    <input type="text" id="phoneNameInput" placeholder="e.g. Disha"/>
+                    <span class="field-error" id="phoneNameError"></span>
+                </div>
+                <div class="field-group">
+                    <label>Phone number</label>
+                    <div class="phone-row">
+                        <select id="countryCode" class="country-select">
+                            <option value="+91">🇮🇳 +91</option>
+                            <option value="+1">🇺🇸 +1</option>
+                            <option value="+44">🇬🇧 +44</option>
+                            <option value="+61">🇦🇺 +61</option>
+                            <option value="+971">🇦🇪 +971</option>
+                            <option value="+65">🇸🇬 +65</option>
+                        </select>
+                        <input type="tel" id="phoneInput" placeholder="9876543210" maxlength="15"/>
+                    </div>
+                    <span class="field-error" id="phoneError"></span>
+                </div>
+
+                <!-- OTP step (hidden initially) -->
+                <div class="field-group hidden" id="otpGroup">
+                    <label>
+                        Enter OTP <span class="otp-hint" id="otpHint"></span>
+                    </label>
+                    <div class="otp-boxes" id="otpBoxes">
+                        <input class="otp-box" type="text" maxlength="1" inputmode="numeric"/>
+                        <input class="otp-box" type="text" maxlength="1" inputmode="numeric"/>
+                        <input class="otp-box" type="text" maxlength="1" inputmode="numeric"/>
+                        <input class="otp-box" type="text" maxlength="1" inputmode="numeric"/>
+                        <input class="otp-box" type="text" maxlength="1" inputmode="numeric"/>
+                        <input class="otp-box" type="text" maxlength="1" inputmode="numeric"/>
+                    </div>
+                    <button type="button" class="resend-btn" id="resendBtn" onclick="resendOTP()" disabled>
+                        Resend OTP <span id="resendTimer">(30s)</span>
+                    </button>
+                </div>
+                <button type="submit" class="submit-btn" id="phoneSendBtn">
+                    <span class="btn-text" id="phoneBtnText">Send OTP</span>
+                    <span class="btn-loader hidden" id="phoneLoader">⟳</span>
+                </button>
+                <div class="server-msg hidden" id="phoneMsg"></div>
+            </form>
+
+            <!-- Divider -->
+            <div class="divider">
+                <span>or</span>
+            </div>
+
+            <!-- Google social (UI only for now) -->
+            <div class="social-row">
+                <button class="social-btn" type="button" id="googleBtn">
+                    <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+                    Continue with Google
+                </button>
+            </div>
+
+        </div>
+        <p class="back-link"><a href="./index.html">← Back to Home</a></p>
+    </div>
+
+    
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+
+    <!-- <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script> -->
+
+    <script src="./auth.js"></script>
+
+  <!-- Register PWA Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

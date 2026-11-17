@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoxBuddy — A Quiet Digital Study Space</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- PWA & Mobile Meta -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#F5F1E8">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="NoxBuddy">
+</head>
+<body>
+
+  <!-- Minimal horizontal nav -->
+  <header class="site-header">
+    <nav class="nav-container">
+      <a href="./index.html" class="brand">
+        <span class="brand-dot"></span>
+        <span class="brand-name">NoxBuddy</span>
+      </a>
+      <div class="nav-links">
+        <a href="#journey" class="nav-link">How it works</a>
+        <a href="#preview" class="nav-link">The space</a>
+        <a href="./auth.html" class="nav-link signin-link">Sign in</a>
+        <a href="./auth.html" class="btn btn-primary btn-sm">Start your study space &rarr;</a>
+      </div>
+      <button class="landing-menu-btn" id="landingMenuBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+    <div class="landing-mobile-drawer" id="landingMobileDrawer" aria-label="Mobile navigation">
+      <a href="#journey" class="mobile-drawer-link">How it works</a>
+      <a href="#preview" class="mobile-drawer-link">The space</a>
+      <a href="./auth.html" class="mobile-drawer-link">Sign in</a>
+      <a href="./auth.html" class="btn btn-primary btn-sm mobile-cta">Start your study space &rarr;</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero-section">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Your personal study desk</p>
+        <h1 class="hero-title">Make studying feel a&nbsp;little&nbsp;lighter.</h1>
+        <p class="hero-subtitle">
+          NoxBuddy brings planning, focus, reflection and a little companionship into one quiet space.
+        </p>
+        <div class="hero-actions">
+          <a href="./auth.html" class="btn btn-primary">Start your study space &rarr;</a>
+          <a href="#journey" class="btn btn-secondary">See how it works</a>
+        </div>
+      </div>
+
+      <!-- Hero Visual: Thoughtful Study Desk Composition -->
+      <div class="desk-canvas" aria-label="An organized digital study desk">
+        <div class="desk-surface">
+
+          <!-- Notebook Sheet (Planr) -->
+          <div class="desk-item desk-notebook">
+            <div class="notebook-header">
+              <span class="notebook-tag">Today's Focus</span>
+              <span class="notebook-date">Wed, Sep 30</span>
+            </div>
+            <ul class="notebook-lines">
+              <li class="line-item done">
+                <span class="check-box">&check;</span>
+                <span class="line-text">Review Operating Systems notes</span>
+              </li>
+              <li class="line-item">
+                <span class="check-box"></span>
+                <span class="line-text">Solve 3 graph questions</span>
+              </li>
+              <li class="line-item">
+                <span class="check-box"></span>
+                <span class="line-text">Draft project architecture</span>
+              </li>
+            </ul>
+            <div class="pencil-accent" aria-hidden="true"></div>
+          </div>
+
+          <!-- Focus Timer + Pawmo (Pawmo) -->
+          <div class="desk-item desk-pawmo">
+            <div class="pawmo-badge">
+              <span class="streak-flame">&bull;</span>
+              <span>7 day streak</span>
+            </div>
+            <div class="timer-dial">
+              <div class="timer-ring-svg">
+                <svg viewBox="0 0 100 100">
+                  <circle class="ring-bg" cx="50" cy="50" r="42"></circle>
+                  <circle class="ring-fg" cx="50" cy="50" r="42"></circle>
+                </svg>
+              </div>
+              <div class="timer-center">
+                <span class="timer-digits">25:00</span>
+                <span class="timer-label">Focus session</span>
+              </div>
+            </div>
+            <div class="pawmo-character">
+              <span class="pet-figure" title="Pawmo">&#x1F431;</span>
+              <span class="pet-caption">Pawmo is studying with you</span>
+            </div>
+          </div>
+
+          <!-- Small Pixel message bubble (Pixel) -->
+          <div class="desk-item desk-pixel">
+            <div class="pixel-avatar">&#x2726;</div>
+            <div class="pixel-bubble">
+              <p class="pixel-text">&ldquo;Take your time with recursion. Break it into the base case first.&rdquo;</p>
+              <span class="pixel-author">Pixel &middot; your mentor</span>
+            </div>
+          </div>
+
+          <!-- Pebble journal slip (Pebble) -->
+          <div class="desk-item desk-pebble">
+            <div class="pebble-pin">&#x1F33F;</div>
+            <p class="pebble-mood">Feeling focused &amp; steady</p>
+            <p class="pebble-quote">&ldquo;Sat down at 9 AM. The morning flew by without distractions.&rdquo;</p>
+            <span class="pebble-signoff">&mdash; Morning reflection</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Four Companions Section: A study day, in four little steps -->
+    <section class="journey-section" id="journey">
+      <div class="section-intro">
+        <p class="section-label">A study day</p>
+        <h2 class="section-title">In four little steps.</h2>
+        <p class="section-desc">Each companion has its own quiet role to play throughout your day.</p>
+      </div>
+
+      <div class="steps-flow">
+        
+        <!-- Step 1: Planr -->
+        <article class="step-card step-planr">
+          <div class="step-meta">
+            <span class="step-num">01 &mdash; Plan it</span>
+            <span class="companion-tag tag-planr">Planr</span>
+          </div>
+          <h3 class="step-title">Write down what matters today.</h3>
+          <p class="step-desc">
+            No endless backlog. Just a clean, notebook-style sheet to capture what you actually intend to finish before turning off the lamp.
+          </p>
+          <div class="step-visual visual-planr">
+            <div class="paper-preview">
+              <div class="paper-ruled-line done">
+                <span class="mini-box">&check;</span>
+                <span>Finish DBMS chapter 4</span>
+              </div>
+              <div class="paper-ruled-line">
+                <span class="mini-box"></span>
+                <span>Revise dynamic programming</span>
+              </div>
+              <div class="paper-ruled-line">
+                <span class="mini-box"></span>
+                <span>Push portfolio updates</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Step 2: Pawmo -->
+        <article class="step-card step-pawmo">
+          <div class="step-meta">
+            <span class="step-num">02 &mdash; Focus on it</span>
+            <span class="companion-tag tag-pawmo">Pawmo</span>
+          </div>
+          <h3 class="step-title">Set a timer, start a session and keep your streak alive.</h3>
+          <p class="step-desc">
+            Pawmo sits quietly by your timer. Every completed session earns steady energy, gentle milestones, and uninterrupted deep focus.
+          </p>
+          <div class="step-visual visual-pawmo">
+            <div class="pawmo-preview-dial">
+              <span class="dial-time">25:00</span>
+              <span class="dial-pawmo-pet">&#x1F431;</span>
+              <span class="dial-sub">Ready to focus &middot; 7-day streak</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Step 3: Pixel -->
+        <article class="step-card step-pixel">
+          <div class="step-meta">
+            <span class="step-num">03 &mdash; Ask when you're stuck</span>
+            <span class="companion-tag tag-pixel">Pixel</span>
+          </div>
+          <h3 class="step-title">Talk through questions, learn something new or simply have a conversation.</h3>
+          <p class="step-desc">
+            A friendly companion when concepts feel difficult or placement anxiety kicks in. Pixel explains simply, quizzes patiently, and never judges.
+          </p>
+          <div class="step-visual visual-pixel">
+            <div class="chat-snippet">
+              <div class="chat-msg user">Can we break down binary search trees?</div>
+              <div class="chat-msg bot">Think of it like an organized bookshelf: smaller numbers on your left, larger on your right. Let's trace one example together.</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Step 4: Pebble -->
+        <article class="step-card step-pebble">
+          <div class="step-meta">
+            <span class="step-num">04 &mdash; Leave something behind</span>
+            <span class="companion-tag tag-pebble">Pebble</span>
+          </div>
+          <h3 class="step-title">Write about your day and check in with yourself.</h3>
+          <p class="step-desc">
+            A gentle mood-adaptive journal. Pick how you feel, write down an honest paragraph about the day, and let your study desk reset for tomorrow.
+          </p>
+          <div class="step-visual visual-pebble">
+            <div class="journal-snippet">
+              <div class="journal-snippet-header">
+                <span class="mood-pill">&#x2600;&#xFE0F; Happy</span>
+                <span class="journal-date">Evening entry</span>
+              </div>
+              <p class="journal-body">&ldquo;Tackled the hardest problem on my list first. It feels good to end the day with real clarity.&rdquo;</p>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Product Preview Section -->
+    <section class="preview-section" id="preview">
+      <div class="section-intro">
+        <p class="section-label">The workspace</p>
+        <h2 class="section-title">One place for your study life.</h2>
+        <p class="section-desc">Designed like an organized personal desk, not an analytics dashboard.</p>
+      </div>
+
+      <div class="dashboard-frame">
+        <div class="frame-bar">
+          <div class="frame-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="frame-url">noxbuddy.app / home</span>
+        </div>
+        
+        <!-- Live Dashboard Mirror Mockup -->
+        <div class="frame-content">
+          <div class="mock-topbar">
+            <span class="mock-brand">NoxBuddy</span>
+            <div class="mock-nav">
+              <span class="mock-nav-item active">Home</span>
+              <span class="mock-nav-item">Planr</span>
+              <span class="mock-nav-item">Pawmo</span>
+              <span class="mock-nav-item">Pebble</span>
+              <span class="mock-nav-item">Pixel</span>
+            </div>
+            <div class="mock-user">
+              <span class="mock-avatar">D</span>
+            </div>
+          </div>
+
+          <div class="mock-greeting">
+            <h3>Good afternoon.</h3>
+            <p>Ready for a little progress? You have 2 tasks left today.</p>
+          </div>
+
+          <div class="mock-grid">
+            <div class="mock-card mock-pawmo">
+              <div class="mock-card-tag tag-pawmo">Pawmo &middot; Focus Session</div>
+              <div class="mock-timer-display">25:00</div>
+              <p class="mock-timer-sub">Ready to focus &middot; &#x1F525; 7 day streak</p>
+              <div class="mock-btn">Start Focus &rarr;</div>
+            </div>
+
+            <div class="mock-card mock-planr">
+              <div class="mock-card-tag tag-planr">Planr &middot; Today</div>
+              <ul class="mock-tasks">
+                <li class="done">&check; Complete Graph traversal</li>
+                <li>&square; Revise DBMS indexing</li>
+                <li>&square; Read 1 chapter of OS</li>
+              </ul>
+              <span class="mock-link">2 tasks remaining &middot; View Planr &rarr;</span>
+            </div>
+
+            <div class="mock-card mock-pebble">
+              <div class="mock-card-tag tag-pebble">Pebble &middot; Journal</div>
+              <p class="mock-q">How are you feeling today?</p>
+              <div class="mock-moods">
+                <span class="active">&#x2600;&#xFE0F; Happy</span>
+                <span>&#x1F327;&#xFE0F; Low</span>
+                <span>&#x26A1; Focused</span>
+                <span>&#x1F319; Tired</span>
+              </div>
+              <p class="mock-journal-quote">&ldquo;A quiet, productive afternoon.&rdquo;</p>
+            </div>
+
+            <div class="mock-card mock-pixel">
+              <div class="mock-card-tag tag-pixel">&#x2726; Pixel &middot; Companion</div>
+              <p class="mock-q">Need a hand?</p>
+              <p class="mock-sub">Ask a concept, talk through interview nerves, or brainstorm.</p>
+              <span class="mock-link">Chat with Pixel &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="closing-section">
+      <div class="closing-box">
+        <h2 class="closing-title">Your little study space is waiting.</h2>
+        <p class="closing-text">
+          Plan something. Focus for a while. Write something down. Start again tomorrow.
+        </p>
+        <div class="closing-action">
+          <a href="./auth.html" class="btn btn-primary">Get started &rarr;</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Quiet Minimal Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p class="footer-brand">NoxBuddy &middot; A quiet study space for thoughtful learners.</p>
+      <div class="footer-links">
+        <a href="./auth.html">Sign in</a>
+        <a href="#journey">About companions</a>
+        <a href="./home.html">Dashboard</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('landingMenuBtn');
+    const drawer = document.getElementById('landingMobileDrawer');
+    if (menuBtn && drawer) {
+      menuBtn.addEventListener('click', () => {
+        const isOpen = drawer.classList.toggle('open');
+        menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+      drawer.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          drawer.classList.remove('open');
+          menuBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  </script>
+
+  <!-- Register PWA Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

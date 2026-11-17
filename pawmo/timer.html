@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PawMo — Focus Companion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./timer.css">
+  <!-- PWA & Mobile Meta -->
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#F5F1E8">
+  <link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="NoxBuddy">
+</head>
+<body>
+
+  <!-- Theme & Sound Toggles -->
+  <div class="top-left-controls">
+    <button id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+      <span class="icon sun">☀️</span>
+      <span class="icon moon">🌙</span>
+    </button>
+    <button id="soundToggle" class="sound-toggle-btn" aria-label="Toggle focus bell chime" title="Focus chime: Sound ON">
+      <span class="icon sound-icon" id="soundIcon">🔔</span>
+    </button>
+  </div>
+
+  <!-- Back link -->
+  <p class="back-link"><a href="../home.html">← Back to Home</a></p>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+  <!-- MODALS -->
+  
+  <!-- Progress Modal -->
+  <div id="progressModal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Today's Progress">
+    <div class="modal-box">
+      <button class="modal-close" id="closeProgressModal" aria-label="Close">✕</button>
+      <h2 class="modal-title">📊 Today's Progress</h2>
+      <div class="modal-grid">
+        <div class="modal-stat"><span class="modal-stat-icon">📚</span><span class="modal-stat-label">Sessions</span><span class="modal-stat-val" id="ms-sessions">0</span></div>
+        <div class="modal-stat"><span class="modal-stat-icon">⏱</span><span class="modal-stat-label">Study Time</span><span class="modal-stat-val" id="ms-time">0m</span></div>
+        <div class="modal-stat"><span class="modal-stat-icon">🎯</span><span class="modal-stat-label">Goal</span><span class="modal-stat-val" id="ms-goal">0%</span></div>
+        <div class="modal-stat"><span class="modal-stat-icon">⭐</span><span class="modal-stat-label">XP Earned</span><span class="modal-stat-val" id="ms-xp">0</span></div>
+        <div class="modal-stat"><span class="modal-stat-icon">🏆</span><span class="modal-stat-label">Level</span><span class="modal-stat-val" id="ms-level">1</span></div>
+        <div class="modal-stat"><span class="modal-stat-icon">📅</span><span class="modal-stat-label">Total Sessions</span><span class="modal-stat-val" id="ms-total">0</span></div>
+        <div class="modal-stat"><span class="modal-stat-icon">⏳</span><span class="modal-stat-label">Total Time</span><span class="modal-stat-val" id="ms-totaltime">0m</span></div>
+        <div class="modal-stat"><span class="modal-stat-icon">🔥</span><span class="modal-stat-label">Best Streak</span><span class="modal-stat-val" id="ms-beststreak">0</span></div>
+      </div>
+      <div class="modal-insight" id="modalInsight"></div>
+    </div>
+  </div>
+
+  <!-- Distraction Modal -->
+  <div id="distractModal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Distraction Report">
+    <div class="modal-box">
+      <button class="modal-close" id="closeDistractModal" aria-label="Close">✕</button>
+      <h2 class="modal-title">🚫 Distraction Report</h2>
+      <div class="modal-grid">
+        <div class="modal-stat"><span class="modal-stat-icon">🔄</span><span class="modal-stat-label">Tab Switches</span><span class="modal-stat-val" id="ds-switches">0</span></div>
+        <div class="modal-stat"><span class="modal-stat-icon">⏱</span><span class="modal-stat-label">Time Away</span><span class="modal-stat-val" id="ds-away">0m 0s</span></div>
+        <div class="modal-stat"><span class="modal-stat-icon">📉</span><span class="modal-stat-label">Focus Score</span><span class="modal-stat-val" id="ds-focus">100%</span></div>
+        <div class="modal-stat"><span class="modal-stat-icon">✅</span><span class="modal-stat-label">Completion Rate</span><span class="modal-stat-val" id="ds-completion">0%</span></div>
+        <div class="modal-stat"><span class="modal-stat-icon">⭐</span><span class="modal-stat-label">Best Focus</span><span class="modal-stat-val" id="ds-best">—</span></div>
+        <div class="modal-stat"><span class="modal-stat-icon">📊</span><span class="modal-stat-label">Avg Focus</span><span class="modal-stat-val" id="ds-avg">—</span></div>
+      </div>
+      <p class="modal-note">⚠ Time Away is estimated — we track when you leave this tab, not which sites you visit.</p>
+      <div class="modal-insight" id="distractInsight"></div>
+    </div>
+  </div>
+
+  <!-- MAIN LAYOUT -->
+   <div id="timerlay">
+
+    <!-- ── PET PANEL ── -->
+    <div class="container pet-panel">
+      <div class="panel-header">
+        <h1 class="title">PawMo</h1>
+        <p class="subtitle">Your Focus Companion</p>
+      </div>
+
+      <div class="pet-area">
+        <div class="pet-emoji" id="petFace">🐱</div>
+        <div class="pet-glow"></div>
+      </div>
+
+      <div class="pet-identity">
+        <span id="petname" title="Double-click to rename">Poco</span>
+        <div class="pet-selector">
+          <select id="petSelect" aria-label="Choose pet">
+            <option value="🐱">🐱 Cat</option>
+            <option value="🐈‍⬛">🐈‍⬛ Black Cat</option>
+            <option value="🦉">🦉 Owl</option>
+            <option value="🐰">🐰 Bunny</option>
+            <option value="🐼">🐼 Panda</option>
+            <option value="🦊">🦊 Fox</option>
+            <option value="🐧">🐧 Penguin</option>
+            <option value="🦄">🦄 Unicorn</option>
+            <option value="🐸">🐸 Frog</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Level + XP -->
+      <div class="xp-section">
+        <div class="xp-header">
+          <span class="xp-level" id="xpLevel">Lv 1</span>
+          <span class="xp-label" id="xpLabel">0 / 100 XP</span>
+        </div>
+        <div class="xp-bar-track">
+          <div class="xp-bar-fill" id="xpBarFill"></div>
+        </div>
+      </div>
+
+      <p id="petMessage" class="pet-message">Let's study together!</p>
+
+      <!-- Stat Cards -->
+      <div class="stats">
+        <div class="card mood" title="Mood">
+          <span class="card-label">Mood</span>
+          <span id="mood" class="card-value">😊 Cheerful</span>
+        </div>
+        <div class="card energy" title="Energy">
+          <span class="card-label">Energy</span>
+          <span id="energy" class="card-value">⚡ 80%</span>
+          <div class="bar"><div class="fill" id="energyFill"></div></div>
+        </div>
+        <div class="card streak" title="Study streak">
+          <span class="card-label">Streak</span>
+          <span id="streak" class="card-value">🔥 0 Days</span>
+        </div>
+      </div>
+
+      <!-- Daily Goal -->
+      <div class="goal-section">
+        <div class="goal-header">
+          <span class="goal-icon">🎯</span>
+          <span class="goal-title">Daily Goal</span>
+          <span class="goal-progress-label" id="goalLabel">0 / 4 Sessions</span>
+        </div>
+        <div class="goal-bar-track">
+          <div class="goal-bar-fill" id="goalBarFill"></div>
+        </div>
+      </div>
+
+      <!-- Sessions row — clickable → Progress Modal -->
+      <div class="sessions-row clickable" id="sessionsRow" title="Click to view detailed progress" role="button" tabindex="0" aria-label="View today's progress">
+        <span class="sessions-label">📚 Sessions Today</span>
+        <span id="sessionsCount" class="sessions-value">0</span>
+      </div>
+
+      <!-- Distraction card — clickable → Distraction Modal -->
+      <div class="distraction-row clickable" id="distractionRow" title="Click to view distraction report" role="button" tabindex="0" aria-label="View distraction report">
+        <span class="sessions-label">🚫 Distractions Today</span>
+        <span id="distractCount" class="sessions-value">0</span>
+      </div>
+    </div>
+
+    <!-- ── TIMER PANEL ── -->
+    <div class="container timer-panel">
+      <div class="panel-header">
+        <p id="selection" class="session-status">Ready to focus</p>
+      </div>
+
+      <div class="timer-ring-wrap">
+        <svg class="timer-ring" viewBox="0 0 160 160" aria-hidden="true">
+          <circle class="ring-bg" cx="80" cy="80" r="68"/>
+          <circle class="ring-fill" id="ringFill" cx="80" cy="80" r="68"/>
+        </svg>
+        <div class="timer-inner">
+          <h2 id="timer">25:00</h2>
+          <p class="timer-pct" id="timerPct">0% Complete</p>
+          <p class="timer-sub" id="timerSub">25 min session</p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="startBtn" class="btn-start">▶ Start</button>
+        <button id="breakBtn" class="btn-break">⏸ Break</button>
+        <button id="resetBtn" class="btn-reset">⟳</button>
+      </div>
+
+      <!-- Focus score strip (shown during/after session) -->
+      <div class="focus-strip" id="focusStrip">
+        <span class="focus-strip-label">Focus Score</span>
+        <span class="focus-strip-val" id="focusScoreVal">—</span>
+      </div>
+
+      <div class="divider"></div>
+
+      <p class="time-grid-label">Session Length</p>
+      <div class="times">
+        <button class="timeBtn active" data-time="25">25 min</button>
+        <button class="timeBtn" data-time="45">45 min</button>
+        <button class="timeBtn" data-time="60">60 min</button>
+        <button class="timeBtn" data-time="90">90 min</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="./timer.js"></script>
+  <!-- Register PWA Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('../sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
